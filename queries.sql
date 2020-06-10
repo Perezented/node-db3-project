@@ -23,8 +23,7 @@ ORDER BY "ProductName" ASC
 
 -- Display the OrderID, Customer's Company Name and the employee's LastName for every order. All columns should be labeled clearly. Displays 16,789 records.
 
-
-SELECT o."Id", e."LastName", c."CompanyName" FROM "Order" as o
+SELECT o."Id" orderId, e."LastName" employeeLastName, c."CompanyName"customersCompanyName FROM "Order" as o
 JOIN "Employee" as e
 ON o."EmployeeId" = e."Id" 
 JOIN "Customer" as c
