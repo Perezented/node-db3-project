@@ -71,7 +71,7 @@ router.post("/:id/steps", (req, res) => {
         .then((scheme) => {
             if (scheme) {
                 Schemes.addStep(stepData, id).then((step) => {
-                    res.status(201).json(step);
+                    res.status(201).json({ scheme });
                 });
             } else {
                 res.status(404).json({
@@ -92,7 +92,9 @@ router.put("/:id", (req, res) => {
         .then((scheme) => {
             if (scheme) {
                 Schemes.update(changes, id).then((updatedScheme) => {
-                    res.json(updatedScheme);
+                    res.json({
+                        UpdatedScheme: `ID ${id}, is now known as '${changes.scheme_name}'`,
+                    });
                 });
             } else {
                 res.status(404).json({
@@ -109,17 +111,17 @@ router.delete("/:id", (req, res) => {
     const { id } = req.params;
 
     Schemes.remove(id)
-        .then((deleted) => {
-            if (deleted) {
-                res.json({ removed: deleted });
-            } else {
-                res.status(404).json({
-                    message: "Could not find scheme with given id",
-                });
-            }
+        // .then(res.status(200).json({ del: "item was deleted" }))
+        // .catch(res.status(404).json({ err: "item not found" }));
+        .then((delitem) => {
+            console.log(delitem);
+            if (delitem > 0) {
+                res.status(200).json({ del: "item deleted" });
+            } else if (delitem === 0)
+                res.status(404).json({ error: "Item is not in database" });
         })
         .catch((err) => {
-            res.status(500).json({ message: "Failed to delete scheme" });
+            console.log(err);
         });
 });
 

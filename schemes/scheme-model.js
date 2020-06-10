@@ -24,15 +24,16 @@ function findSteps(id) {
             "steps.instructions",
             "steps.step_number",
             "scheme_name"
-        );
+        )
+        .orderBy("steps.step_number");
 }
 function add(data) {
     return db("schemes").insert(data, "*");
 }
 function addStep(stepData, id) {}
 function update(changes, id) {
-    db("schemes").where(id).update(changes);
+    return db("schemes").where({ id }).first().update(changes);
 }
 function remove(id) {
-    db("schemes").where("id", id).del();
+    return db("schemes").where({ id }).first().del();
 }
