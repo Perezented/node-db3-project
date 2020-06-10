@@ -30,7 +30,14 @@ function findSteps(id) {
 function add(data) {
     return db("schemes").insert(data, "*");
 }
-function addStep(stepData, id) {}
+function addStep(stepData, schemeId) {
+    stepData.scheme_Id = schemeId;
+
+    return db("steps")
+        .where("id", schemeId)
+        .join("schemes", "schemes.id", "steps.scheme_id")
+        .insert(stepData, "*");
+}
 function update(changes, id) {
     return db("schemes").where({ id }).first().update(changes);
 }
