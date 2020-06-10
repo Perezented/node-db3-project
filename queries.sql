@@ -34,5 +34,24 @@ ON o."CustomerId" = c."Id"
 
 -- STRETCH 
 
-SELECT CategoryName, Unit as count FROM [Categories] as c JOIN [Products] as p ON c.categoryid = p.categoryid
+--  Displays CategoryName and a new column called Count that shows how many products are in each category. Shows 8 records.
 
+SELECT 
+    COALESCE(c.CategoryName, 'All Categories'),
+    SUM( p.CategoryID )  'Count'
+FROM
+    Products as p
+    
+JOIN Categories as c
+ON c.CategoryID = p.CategoryID
+GROUP BY  (p.CategoryID);
+
+
+--  Display OrderID and a column called ItemCount that shows the total number of products placed on the order. Shows 196 records.
+SELECT 
+    COALESCE(od.OrderID, 'All Orders') 'Order ID',
+    SUM( od.Quantity )  'Item Count'
+
+FROM
+    OrderDetails as od
+GROUP BY  (od.OrderID);
