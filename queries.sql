@@ -29,3 +29,10 @@ ON o."EmployeeId" = e."Id"
 JOIN "Customer" as c
 ON o."CustomerId" = c."Id"
 
+
+
+
+-- STRETCH 
+
+SELECT CategoryName, Unit as count FROM [Categories] as c JOIN [Products] as p ON c.categoryid = p.categoryid
+
